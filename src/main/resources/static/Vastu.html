@@ -5,7 +5,7 @@
     <title>Vastu Page</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .compass-section, .camera-section {
+        .compass-section, .camera-section, .vastu-recommendations {
             margin: 30px auto;
             text-align: center;
         }
@@ -17,12 +17,27 @@
             border-radius: 8px;
             margin-top: 10px;
         }
+        .vastu-recommendations ul {
+            text-align: left;
+            display: inline-block;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
 <div class="hero">
     <h1>Vastu Recommendations</h1>
-    <!-- ...your vastu content here... -->
+</div>
+
+<div class="vastu-recommendations">
+    <h2>Vastu Recommendations</h2>
+    <ul>
+        <li>Entrance should be in the North-East direction for positive energy.</li>
+        <li>Kitchen is best placed in the South-East corner.</li>
+        <li>Master bedroom should be in the South-West corner.</li>
+        <li>Puja room should be in the North-East corner.</li>
+        <li>Avoid placing mirrors in front of the bed.</li>
+    </ul>
 </div>
 
 <div class="compass-section">
@@ -30,7 +45,7 @@
     <div id="compass-value">Heading: --°</div>
 </div>
 <div class="camera-section">
-    <h2>Camera</h2>
+    <h2>Camera (Back)</h2>
     <video id="camera" width="320" height="240" autoplay></video>
 </div>
 
@@ -53,15 +68,24 @@
         document.getElementById('compass-value').textContent = 'Compass not supported';
     }
 
-    // Camera (getUserMedia)
+    // Camera (getUserMedia) - Prefer back camera
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function(stream) {
-                document.getElementById('camera').srcObject = stream;
-            })
-            .catch(function(err) {
-                document.getElementById('camera').style.display = 'none';
-            });
+        navigator.mediaDevices.getUserMedia({
+            video: { facingMode: { exact: "environment" } }
+        })
+        .then(function(stream) {
+            document.getElementById('camera').srcObject = stream;
+        })
+        .catch(function(err) {
+            // Fallback to any camera if back camera is not available
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    document.getElementById('camera').srcObject = stream;
+                })
+                .catch(function(err) {
+                    document.getElementById('camera').style.display = 'none';
+                });
+        });
     } else {
         document.getElementById('camera').style.display = 'none';
     }

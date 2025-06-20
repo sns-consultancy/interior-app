@@ -11,16 +11,26 @@
 </head>
 <body>
 <div class="hero">
-    <h1>3D Room Designer</h1>
+    <h1 id="roomTitle">3D Room Designer</h1>
+    <div>
+        <label for="langSelect">Language:</label>
+        <select id="langSelect" onchange="translate3DRoom()">
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+            <option value="es">Español</option>
+            <option value="hi">हिन्दी</option>
+            <option value="te">తెలుగు</option>
+        </select>
+    </div>
     <div class="controls">
-        <label for="roomType">Choose Room Type:</label>
+        <label for="roomType" id="roomTypeLabel">Choose Room Type:</label>
         <select id="roomType">
             <option value="bedroom">Bedroom</option>
             <option value="kitchen">Kitchen</option>
             <option value="puja">Puja Room</option>
         </select>
         <span id="kitchenOptions" class="hidden">
-            <label for="kitchenShape">Kitchen Shape:</label>
+            <label for="kitchenShape" id="kitchenShapeLabel">Kitchen Shape:</label>
             <select id="kitchenShape">
                 <option value="small">Small (10x10 ft)</option>
                 <option value="medium">Medium (12x15 ft)</option>
@@ -33,9 +43,66 @@
         <button id="showRoomBtn">Show Room</button>
     </div>
     <canvas id="room3d-canvas"></canvas>
+    <br>
+    <a href="Vastu.html" id="vastuLink">Get Vastu Suggestions</a>
+    <a href="Index.html" id="backHomeLink">Back to Home</a>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
 <script>
+    const labels3d = {
+        en: {
+            roomTitle: "3D Room Designer",
+            roomTypeLabel: "Choose Room Type:",
+            kitchenShapeLabel: "Kitchen Shape:",
+            showRoomBtn: "Show Room",
+            vastuLink: "Get Vastu Suggestions",
+            backHomeLink: "Back to Home"
+        },
+        fr: {
+            roomTitle: "Concepteur de pièce 3D",
+            roomTypeLabel: "Choisissez le type de pièce :",
+            kitchenShapeLabel: "Forme de la cuisine :",
+            showRoomBtn: "Afficher la pièce",
+            vastuLink: "Obtenir des suggestions Vastu",
+            backHomeLink: "Retour à l'accueil"
+        },
+        es: {
+            roomTitle: "Diseñador de habitaciones 3D",
+            roomTypeLabel: "Elija el tipo de habitación:",
+            kitchenShapeLabel: "Forma de la cocina:",
+            showRoomBtn: "Mostrar habitación",
+            vastuLink: "Obtener sugerencias de Vastu",
+            backHomeLink: "Volver al inicio"
+        },
+        hi: {
+            roomTitle: "3D कक्ष डिज़ाइनर",
+            roomTypeLabel: "कक्ष प्रकार चुनें:",
+            kitchenShapeLabel: "रसोई का आकार:",
+            showRoomBtn: "कक्ष दिखाएँ",
+            vastuLink: "वास्तु सुझाव प्राप्त करें",
+            backHomeLink: "मुख्य पृष्ठ पर वापस जाएँ"
+        },
+        te: {
+            roomTitle: "3D గది డిజైనర్",
+            roomTypeLabel: "గది రకం ఎంచుకోండి:",
+            kitchenShapeLabel: "వంటగది ఆకారం:",
+            showRoomBtn: "గదిని చూపించు",
+            vastuLink: "వాస్తు సూచనలు పొందండి",
+            backHomeLink: "హోమ్‌కు తిరిగి వెళ్ళండి"
+        }
+    };
+
+    function translate3DRoom() {
+        const lang = document.getElementById('langSelect').value;
+        const l = labels3d[lang] || labels3d['en'];
+        document.getElementById('roomTitle').textContent = l.roomTitle;
+        document.getElementById('roomTypeLabel').textContent = l.roomTypeLabel;
+        document.getElementById('kitchenShapeLabel').textContent = l.kitchenShapeLabel;
+        document.getElementById('showRoomBtn').textContent = l.showRoomBtn;
+        document.getElementById('vastuLink').textContent = l.vastuLink;
+        document.getElementById('backHomeLink').textContent = l.backHomeLink;
+    }
+
     function showKitchenOptions() {
         const roomType = document.getElementById('roomType').value;
         document.getElementById('kitchenOptions').className = (roomType === 'kitchen') ? '' : 'hidden';
@@ -94,9 +161,11 @@
         };
         document.getElementById('kitchenShape').onchange = drawRoom;
         document.getElementById('showRoomBtn').onclick = drawRoom;
+        document.getElementById('langSelect').onchange = translate3DRoom;
         showKitchenOptions();
         init3D();
         drawRoom();
+        translate3DRoom();
     };
 </script>
 </body>
