@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vastu Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .compass-section, .camera-section {
+            margin: 30px auto;
+            text-align: center;
+        }
+        #compass-value {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        #camera {
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="hero">
+    <h1>Vastu Recommendations</h1>
+    <!-- ...your vastu content here... -->
+</div>
+
+<div class="compass-section">
+    <h2>Compass</h2>
+    <div id="compass-value">Heading: --°</div>
+</div>
+<div class="camera-section">
+    <h2>Camera</h2>
+    <video id="camera" width="320" height="240" autoplay></video>
+</div>
+
+<a href="3dRoom.html">Back to 3D Room</a>
+<a href="Index.html">Back to Home</a>
+
+<script>
+    // Compass (DeviceOrientation)
+    if (window.DeviceOrientationEvent) {
+        window.addEventListener('deviceorientationabsolute' in window ? 'deviceorientationabsolute' : 'deviceorientation', function(event) {
+            let heading = event.alpha;
+            if (typeof event.webkitCompassHeading !== "undefined") {
+                heading = event.webkitCompassHeading; // iOS
+            }
+            if (heading !== null && !isNaN(heading)) {
+                document.getElementById('compass-value').textContent = 'Heading: ' + Math.round(heading) + '°';
+            }
+        }, true);
+    } else {
+        document.getElementById('compass-value').textContent = 'Compass not supported';
+    }
+
+    // Camera (getUserMedia)
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                document.getElementById('camera').srcObject = stream;
+            })
+            .catch(function(err) {
+                document.getElementById('camera').style.display = 'none';
+            });
+    } else {
+        document.getElementById('camera').style.display = 'none';
+    }
+</script>
+</body>
+</html>
