@@ -1,29 +1,42 @@
+# === Node Modules ===
 node_modules/
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+**/node_modules/
+# === Build Output ===
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-### VS Code ###
+dist/
+.temp/
+.cache/
+# === Logs ===
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# === OS-Specific ===
+.DS_Store
+Thumbs.db
+# === Environment Variables ===
+.env
+.env.*.local
+.env.local
+# === VSCode / IDE Settings ===
 .vscode/
+.idea/
+*.sw?
+# === Coverage Reports ===
+coverage/
+*.lcov
+# === Firebase / Auth Caches (optional) ===
+.firebase/
+.firebaserc
+.firebase-debug.log
+# === Static Assets Generated ===
+public/assets/generated/
+*.png
+*.jpg
+*.jpeg
+# === Git Backup Files ===
+*.orig
+# === Misc ===
+*.bak
+*.tmp
